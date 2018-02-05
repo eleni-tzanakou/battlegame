@@ -5,33 +5,35 @@ import java.util.ArrayList;
 
 public class Sea {
 
-    int[] space;
+    ArrayList<String> space;
     ArrayList<Boat> boats;
 
-    public Sea(int[] space, ArrayList<Boat> boats) {
+    public Sea(ArrayList<String> space, ArrayList<Boat> boats) {
         this.space = space;
         this.boats = boats;
     }
 
-    public Sea(int[] space) {
+    public Sea(ArrayList<String> space) {
         this.space = space;
         this.boats = new ArrayList<Boat>();
     }
 
-    public void hitOrMiss(int hitPosition) {
-        for (int i = 1; i < boats.size(); i++) {
+    public void hitOrMiss(String hitPosition) {
+        for (int i = 0; i < boats.size(); i++) {
             Boat boat = boats.get(i);
-            if( boat.hasPosition(hitPosition)){
+            if (boat.isHit(hitPosition)) {
                 System.out.println("HIT");
+                if (boat.isSunk()) {
+                    System.out.println("BOAT IS SUNK");
+                }
                 return;
             }
         }
         System.out.println("MISS");
     }
-    public void addBoat(Boat boat, int startPosition){
 
-        boat.startPosition = startPosition;
-        boat.endPosition = startPosition + boat.size-1;
+    public void addBoat(Boat boat, String startPosition) {
+        boat.addPosition(startPosition, this.space);
         this.boats.add(boat);
     }
 }
